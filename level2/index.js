@@ -90,6 +90,10 @@ const agent=async (state)=>{
 
 const shouldContinue=async (state)=>{
     console.log(state)
+// state=[
+//     humanMessage:"",
+//     AiMessage:""
+//      ]
     if(state.messages[state.messages.length-1].tool_calls.length>0){
         return "tool_node"
     }else{
@@ -123,6 +127,14 @@ app.post("/chat",async(req,res)=>{
 // });
 
 // Using Langgraph
+ const result=await graph.invoke({
+        messages:[
+            {
+                role:"user",
+                content:prompt
+            }
+        ]
+    })
     console.log(result.messages[result.messages.length-1].content);
     return res.json(result.messages[result.messages.length-1].content);
 });
